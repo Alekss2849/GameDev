@@ -32,11 +32,13 @@ namespace Game
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelWalls1 = new System.Windows.Forms.Label();
+            this.labelWalls2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -48,7 +50,8 @@ namespace Game
             this.pictureBox1.Size = new System.Drawing.Size(616, 616);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.clickAnalizer);
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // label2
             // 
@@ -72,27 +75,27 @@ namespace Game
             this.label3.TabIndex = 3;
             this.label3.Text = "Click on the pawn to move it Or place a wall.";
             // 
-            // label4
+            // labelWalls1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(182, 4);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 25);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "_";
+            this.labelWalls1.AutoSize = true;
+            this.labelWalls1.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelWalls1.Location = new System.Drawing.Point(182, 4);
+            this.labelWalls1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelWalls1.Name = "labelWalls1";
+            this.labelWalls1.Size = new System.Drawing.Size(23, 25);
+            this.labelWalls1.TabIndex = 4;
+            this.labelWalls1.Text = "_";
             // 
-            // label5
+            // labelWalls2
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(560, 4);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 25);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "_";
+            this.labelWalls2.AutoSize = true;
+            this.labelWalls2.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelWalls2.Location = new System.Drawing.Point(560, 4);
+            this.labelWalls2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelWalls2.Name = "labelWalls2";
+            this.labelWalls2.Size = new System.Drawing.Size(23, 25);
+            this.labelWalls2.TabIndex = 5;
+            this.labelWalls2.Text = "_";
             // 
             // label1
             // 
@@ -116,13 +119,24 @@ namespace Game
             this.label6.TabIndex = 2;
             this.label6.Text = "Player Red Walls:";
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(71, 282);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(134, 35);
+            this.pictureBox2.TabIndex = 6;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(633, 689);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.labelWalls2);
+            this.Controls.Add(this.labelWalls1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label2);
@@ -133,6 +147,7 @@ namespace Game
             this.Text = "Quoridor";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,10 +158,11 @@ namespace Game
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelWalls1;
+        private System.Windows.Forms.Label labelWalls2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

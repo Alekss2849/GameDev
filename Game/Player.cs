@@ -9,15 +9,16 @@ namespace Game
         public int y;
         public int winLine;
         public uint walls = 10;
-        public bool movable = true;
+        public bool movable = false;
         public Color color;
+        private int initX, initY;
 
         public List<Point> moves;
 
         public Player(int x, int y, int line, Color color)
         {
-            this.x = x;
-            this.y = y;
+            this.x = initX = x;
+            this.y = initY = y;
             winLine = line;
             this.color = color;
             moves = new List<Point>();
@@ -26,6 +27,14 @@ namespace Game
         public Point getPoint()
         {
             return new Point(x, y);
+        }
+
+        public void reset()
+        {
+            x = initX;
+            y = initY;
+            walls = 10;
+            movable = false;
         }
     }
 }

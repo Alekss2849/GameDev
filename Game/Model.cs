@@ -8,10 +8,11 @@ namespace Game
     {
         private char[,] mainField = new char[17, 17];
         private Player[] players;
-        private Point[] walls = new Point[20];
         private int wallsSize = 0;
+        private Player curPlayer;
 
-        public Player curPlayer;
+        public delegate void Winner(Player player);
+        public event Winner WinAction;
 
         public Model(Player []players)
         {
@@ -57,6 +58,10 @@ namespace Game
             player.moves.Clear();
             int[] dx = { 0, 1, 0, -1 };
             int[] dy = { -1, 0, 1, 0 };
+            int[] ddy = { -2, -2, 2, -2 };
+            int[] ddx = { -2, 2, -2, -2 };
+            int[] ddx2 = { 2, 2, 2, -2 };
+            int[] ddy2 = { -2, 2, 2, 2 };
             for (int k = 0; k < 4; k++)
             {
                 if (player.x + dx[k] >= 0 && player.x + dx[k] <= 16 &&
@@ -73,14 +78,19 @@ namespace Game
                         }
                         else
                         {   
-                            continue;
-                            if (oponent.y > 0 && mainField[oponent.y - 1, oponent.x] == 0)
+                            if (oponent.y - Math.Abs(dy[(k + 1) % 4]) >= 0 &&
+                                oponent.x - Math.Abs(dx[(k + 1) % 4]) >= 0 &&
+                                mainField[oponent.y - Math.Abs(dy[(k + 1) % 4]),
+                                          oponent.x - Math.Abs(dx[(k + 1) % 4])] == 0)
                             {
-                                player.moves.Add(new Point(player.x - 2, player.y - 2));
+                                player.moves.Add(new Point(player.x + ddx[k], player.y + ddy[k]));
                             }
-                            if (oponent.y < 16 && mainField[oponent.y + 1, oponent.x] == 0)
+                            if (oponent.y + Math.Abs(dy[(k + 1) % 4]) <= 16 &&
+                                oponent.x + Math.Abs(dx[(k + 1) % 4]) <= 16 &&
+                                mainField[oponent.y + Math.Abs(dy[(k + 1) % 4]),
+                                    oponent.x + Math.Abs(dx[(k + 1) % 4])] == 0)
                             {
-                                player.moves.Add(new Point(player.x - 2, player.y + 2));
+                                player.moves.Add(new Point(player.x + ddx2[k], player.y + ddy2[k]));
                             }
                         }
                     }
@@ -103,6 +113,7 @@ namespace Game
 
         public bool placeWall(Point coords)
         {
+            if (curPlayer.walls == 0) return false;
             int x = coords.X, y = coords.Y;
             if (x % 2 == 1 && y % 2 == 0 && y < 16 &&
                 mainField[y, x] == 0 && mainField[y + 1, x] == 0 && mainField[y + 2, x] == 0)
@@ -113,7 +124,8 @@ namespace Game
                     fillWallCell('\0', 'v', x, y);
                     return false;
                 }
-                walls[wallsSize++] = new Point(x, y);
+                curPlayer.walls--;
+                switchPlayer();
                 return true;
             }
             if (x % 2 == 0 && y % 2 == 1 && x < 16 &&
@@ -125,7 +137,8 @@ namespace Game
                     fillWallCell('\0', 'h', x, y);
                     return false;
                 }
-                walls[wallsSize++] = new Point(x, y);
+                curPlayer.walls--;
+                switchPlayer();
                 return true;
             }
             return false;
@@ -167,12 +180,37 @@ namespace Game
                 {
                     curPlayer.x = moveCoor.X;
                     curPlayer.y = moveCoor.Y;
+                    if (curPlayer.y == curPlayer.winLine)
+                    {
+                        WinAction?.Invoke(curPlayer);
+                        newGame();
+                        return true;
+                    }
                     switchPlayer();
                     //updatePossibleMoves();
                     return true;
                 }
             }
             return false;
+        }
+
+        private void newGame()
+        {
+            foreach (var player in players)
+            {
+                player.reset();
+            }
+
+            for (int i = 0; i < 17; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    mainField[i, j] = '\0';
+                }
+            }
+            curPlayer = players[0];
+            switchPlayer();
+            updatePossibleMoves();
         }
     }
 }

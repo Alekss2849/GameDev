@@ -26,6 +26,12 @@ namespace Game
             StartPosition = FormStartPosition.Manual;
             Location = new Point(-1600,100);
             this.players = players;
+            labelWalls1.ForeColor = players[0].color;
+            labelWalls2.ForeColor = players[1].color;
+            pictureBox2.Image = new Bitmap(300, 300);
+            gr = Graphics.FromImage(pictureBox2.Image);
+            gr.Clear(Color.FromArgb(132, 132, 190));
+            pictureBox2.Hide();
             newGame();
         }
 
@@ -38,6 +44,7 @@ namespace Game
             gr = Graphics.FromImage(pictureBox1.Image);
             gr.Clear(Color.FromArgb(192, 192, 255));
             refreshPlayers();
+            refreshWallCounters();
         }
 
         public void refreshPlayers()
@@ -46,7 +53,7 @@ namespace Game
             drawPlayers();
         }
 
-        private Point getIndexesFromClick(MouseEventArgs me)
+        private Point getIndexesFromClick(Point me)
         {
             if (me.X < Probel || me.Y < Probel
                               || me.X > Shirota - Probel
@@ -68,9 +75,10 @@ namespace Game
         }
 
 
-        private void clickAnalizer(object sender, EventArgs e)
+        private void clickAnalizer(Point coords)
         {
-            Point coords = getIndexesFromClick((MouseEventArgs)e);
+            label3.Text = coords.X + ";" + coords.Y;
+            coords = getIndexesFromClick(coords);
             if (coords.X == -1 || coords.Y == -1)
             {
                 return;
@@ -95,16 +103,13 @@ namespace Game
             {
                 if (WallAction != null && !WallAction.Invoke(coords)) return;
                 StenkaVertik(coords.X, coords.Y);
-                return;
-
             }
-            if (coords.X % 2 == 0 && coords.Y % 2 == 1)
+            else if (coords.X % 2 == 0 && coords.Y % 2 == 1)
             {
                 if (WallAction != null && !WallAction.Invoke(coords)) return;
                 StenkaGorizont(coords.X, coords.Y);
-                return;
             }
-            label4.Text = coords.X + "; " + coords.Y;
+            refreshWallCounters();
         }
 
         void GrafKvadrat(Point pnt, Brush brush)
@@ -124,6 +129,12 @@ namespace Game
                 }
             }
             pictureBox1.Refresh();
+        }
+
+        void refreshWallCounters()
+        {
+            labelWalls1.Text = players[0].walls.ToString();
+            labelWalls2.Text = players[1].walls.ToString();
         }
 
         void drawPlayers()
@@ -169,6 +180,43 @@ namespace Game
             pictureBox1.Refresh();
         }
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point coords = getIndexesFromClick(e.Location);
+            if (coords.X % 2 == 1 && coords.Y % 2 == 0 && coords.Y < 16 && coords.X < 16)
+            {
+                coords = getCoordsFromIndexes(coords.X, coords.Y);
+                coords.X += Probel / 2-3;
+                coords.Y += 33;
+                pictureBox2.Location = coords;
+                pictureBox2.Width = Probel;
+                pictureBox2.Height = StoronaKvadrata * 2 + Probel;
+                pictureBox2.Show();
+            }
+            //else if (coords.X % 2 == 0 && coords.Y % 2 == 1)
+            else
+            {
+                pictureBox2.Hide();
+            }
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            clickAnalizer(new Point(pictureBox2.Location.X+ 5, pictureBox2.Location.Y+5));
+            pictureBox2.Hide();
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox2.Hide();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            clickAnalizer(((MouseEventArgs)e).Location);
+        }
+
         private void drawPossibleMoves(List<Point> cells)
         {
             foreach (var cell in cells)
@@ -177,6 +225,12 @@ namespace Game
                 Brushes.Beige);
             }
             pictureBox1.Refresh();
+        }
+
+        public void showResult(Player player)
+        {
+            MessageBox.Show(player.color.Name + " player WIN!");
+            newGame();
         }
 
         
