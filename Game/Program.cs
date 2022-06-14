@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Game
@@ -16,7 +14,13 @@ namespace Game
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Player[] players = {
+                new Player(8, 0, 16, Color.Red),
+                new Player(8, 16, 0, Color.Green)
+            };
+            View view = new View(players);
+            Controller controller = new Controller(view, new Model(players));
+            Application.Run(view);
         }
     }
 }

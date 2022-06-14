@@ -8,3 +8,13 @@ C:\Users\aleks\Desktop\игры\Game\Game\bin\Debug\Game.exe
 C:\Users\aleks\Desktop\игры\Game\Game\bin\Debug\Game.pdb
 C:\Users\aleks\Desktop\игры\Game\Game\obj\Debug\Game.exe
 C:\Users\aleks\Desktop\игры\Game\Game\obj\Debug\Game.pdb
+G:\Lessons\C#\Alexandr_KPI\Game\Game\bin\Debug\Game.exe.config
+G:\Lessons\C#\Alexandr_KPI\Game\Game\bin\Debug\Game.exe
+G:\Lessons\C#\Alexandr_KPI\Game\Game\bin\Debug\Game.pdb
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.Properties.Resources.resources
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.exe
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.pdb
+G:\Lessons\C#\Alexandr_KPI\Game\Game\obj\Debug\Game.View.resources
