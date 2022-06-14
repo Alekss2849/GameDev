@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 
 namespace Game
 {
@@ -10,9 +11,13 @@ namespace Game
         private Player[] players;
         private int wallsSize = 0;
         private Player curPlayer;
+        private Random random = new Random();
 
         public delegate void Winner(Player player);
         public event Winner WinAction;
+        public event Action Redraw;
+        public event Action<int, int> StenkaVertik;
+        public event Action<int, int> StenkaGorizont;
 
         public Model(Player []players)
         {
@@ -125,6 +130,7 @@ namespace Game
                     return false;
                 }
                 curPlayer.walls--;
+                StenkaVertik?.Invoke(x, y);
                 switchPlayer();
                 return true;
             }
@@ -138,6 +144,7 @@ namespace Game
                     return false;
                 }
                 curPlayer.walls--;
+                StenkaGorizont?.Invoke(x, y);
                 switchPlayer();
                 return true;
             }
@@ -162,6 +169,21 @@ namespace Game
             curPlayer = curPlayer == players[0] ? players[1] : players[0];
             curPlayer.movable = true;
             updatePossibleMoves();
+            Redraw?.Invoke();
+            if (curPlayer.playerClass == PlayerClass.Computer)
+            {
+                Thread.Sleep(1000);
+                if (curPlayer.walls > 0 && random.Next(3) == 0)
+                {
+                    while (!placeWall(new Point(random.Next(16), random.Next(16))));
+                }
+                else
+                {
+                    moveAction(curPlayer.moves[random.Next(curPlayer.moves.Count)]);
+                }
+                Redraw?.Invoke();
+            }
+
         }
 
         public void updatePossibleMoves()

@@ -15,8 +15,8 @@ namespace Game
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Player[] players = {
-                new Player(8, 0, 16, Color.Red),
-                new Player(8, 16, 0, Color.Green)
+                new Player(8, 0, 16, Color.Red, PlayerClass.Computer),
+                new Player(8, 16, 0, Color.Green, PlayerClass.Human)
             };
             View view = new View(players);
             Controller controller = new Controller(view, new Model(players));

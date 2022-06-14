@@ -47,6 +47,12 @@ namespace Game
             refreshWallCounters();
         }
 
+        public void redraw()
+        {
+            refreshPlayers();
+            refreshWallCounters();
+        }
+
         public void refreshPlayers()
         {
             GrafKvadratov();
@@ -156,9 +162,9 @@ namespace Game
                 size, size);
         }
 
-        void StenkaVertik(int x, int y, Brush brush = null)
+        public void StenkaVertik(int x, int y)
         {
-            if (brush == null) brush = Brushes.Gray;
+            Brush brush = Brushes.Gray;
             var coor = getCoordsFromIndexes(x, y);
             gr.FillRectangle(brush,
                 coor.X, coor.Y,
@@ -168,9 +174,9 @@ namespace Game
             pictureBox1.Refresh();
         }
 
-        void StenkaGorizont(int x, int y, Brush brush = null)
+        public void StenkaGorizont(int x, int y)
         {
-            if (brush == null) brush = Brushes.Gray;
+            Brush brush = Brushes.Gray;
             gr.FillRectangle(brush,
                 Probel + (StoronaKvadrata + Probel) * x / 2,
                 (StoronaKvadrata + Probel) * (y / 2 + 1),
